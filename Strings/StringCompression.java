@@ -1,7 +1,7 @@
 
 
 public class StringCompression {
-    public static String frequeString(String str){
+    public static String frequencyString(String str){
         StringBuilder sb = new StringBuilder();
         int count [] = new int[26];
         for(int i =0;i<str.length();i++){
