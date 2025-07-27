@@ -38,6 +38,11 @@ public class ReverseArray {
         recursionReversal(arr, i+1, j-1);
     }
 
+    /**
+     * this funtion reverse an array using recurion but only one varaible
+     * @param arr Array to be reversed
+     * @param i Pointer for swapping
+     */
     public static void recursionReversal(int [] arr , int i){
         int n= arr.length;
         if(i>= n/2){
