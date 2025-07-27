@@ -20,11 +20,43 @@ public class ReverseArray {
         }
         return arr;
     }
+
+
+    /**
+     * this function uses recursion to reverse an array
+     * @param arr array to be reversed
+     * @param i left pointer
+     * @param j right pointer
+     */
+    public static void recursionReversal(int [] arr , int i ,int j){
+        if(i>=j){
+            return ;
+        }
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+        recursionReversal(arr, i+1, j-1);
+    }
+
+    public static void recursionReversal(int [] arr , int i){
+        int n= arr.length;
+        if(i>= n/2){
+            return;
+        }
+        int temp = arr[i];
+        arr[i] = arr[n-i-1];
+        arr[n-i-1] = temp ;
+        recursionReversal(arr, i+1);
+    }
+
     public static void main(String[] args) {
         int [] arr = {1,2,3,4,5};
-       int result [] =  NormalReversal(arr);
-       for(int i : result){
+        // NormalReversal(arr);
+        // recursionReversal(arr, 0, arr.length-1);
+        recursionReversal(arr, 0);
+       for(int i : arr){
         System.out.println(i);
        }
+
     }
 }
