@@ -5,16 +5,17 @@ public class BinanrySearch{
         //Time Complexity : O(log n)
         int start=0;
         int end=arr.length-1;
-        int mid=(start+end)/2;
+        
         while(start<=end){
+            int mid=(start+end)/2;
             if(arr[mid]==key){
                 return mid+1;
             }
             else if(arr[mid]>key){
-                mid=mid-1;
+                end=mid-1;
             }
             else{
-                mid=mid+1;
+                start=mid+1;
             }
         }
         return -1;
