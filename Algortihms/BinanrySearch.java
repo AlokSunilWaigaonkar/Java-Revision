@@ -26,3 +26,4 @@ public class BinanrySearch{
         System.out.println(key +" is present at location "+binarySearch(arr, key));
     }
 }
+
