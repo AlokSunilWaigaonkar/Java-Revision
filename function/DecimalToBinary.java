@@ -19,5 +19,6 @@ public class DecimalToBinary {
         int decimal = sc.nextInt();
         int binary = decimalToBinary(decimal);
         System.out.println("Binary representation of "+decimal+" is "+binary);
+        sc.close();
     }
 }
