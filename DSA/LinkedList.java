@@ -38,6 +38,35 @@ public class LinkedList {
         size++;
     }
 
+    public int recursiveSearch(int key){
+        int i=0;
+        Node tempNode = headNode;
+        return searchHelper(key,i,tempNode);
+        
+    }
+    public int searchHelper(int key ,int index,Node tempNode){
+        if(tempNode.data == key){
+            return index;
+        }
+        else if(tempNode.next == null){
+            return -1;
+        }
+        return searchHelper(key, index+1, tempNode.next);
+    }
+    public int searchHelper(Node heaNode,int key){
+        if(headNode == null){
+            return -1;
+        }
+        if(headNode.data == key){
+            return 0;
+        }
+        int idx = searchHelper(heaNode.next, key);
+        if(idx==-1){
+            return -1;
+        }
+        return idx+1;
+    }
+
     public void add(int index , int data){
         Node newNode = new Node(data);
         if(headNode == null){
@@ -104,6 +133,60 @@ public class LinkedList {
         return value;
     }
 
+    public int itrSearch(int key){
+        Node tempNode = headNode;
+        int i=0;
+        while(tempNode!=null){
+            if(tempNode.data == key){
+                return i;
+            }
+            tempNode = tempNode.next;
+            i++;
+        }
+        return -1;
+    }
+
+    public void reverse(){
+        Node prev = null;
+        Node curr = tailNode = headNode;
+        Node next;
+        while(curr != null){
+            next = curr.next;
+            curr.next = prev;
+            prev= curr;
+            curr = next;
+        }
+        headNode = prev;
+    }
+
+    public int deleteNodeFromEnd(int index){
+        Node temp = headNode;
+        int sz=0;
+        while(temp!=null){
+            temp = temp.next;
+            sz++;
+        }
+
+        if(sz == index){
+            int value = headNode.data;
+            headNode=headNode.next;
+            return value;
+        }
+
+        int i =1;
+        int iToFind = sz-index;
+        Node prev = headNode;
+        
+        while(i<iToFind){
+            prev = prev.next;
+            i++;
+        }
+        
+        int value = prev.next.data;
+        prev.next = prev.next.next;
+        return  value;
+    }
+
     public static void main(String[] args) {
         LinkedList ll = new LinkedList();
         ll.addTailNode(1);
@@ -111,6 +194,10 @@ public class LinkedList {
         ll.addTailNode(3);
         ll.addTailNode(4);
         ll.addTailNode(5);
+        ll.printLL();
+        // ll.reverse();
+        // ll.printLL();
+        ll.deleteNodeFromEnd(3);
         ll.printLL();
     }
 }
