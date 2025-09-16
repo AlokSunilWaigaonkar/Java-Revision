@@ -187,17 +187,148 @@ public class LinkedList {
         return  value;
     }
 
+    public boolean isPalindrome(){
+        if(headNode == null || headNode.next == null){
+            return true;
+        }
+        //find mid 
+        Node mid = findMid(headNode);
+        // reverse 2nd half
+        Node prev = null;
+        Node curr = mid;
+        Node next;
+        while(curr != null){
+            next = curr.next;
+            curr.next =prev;
+            prev = curr;
+            curr= next;
+        }
+        Node right = prev;
+        Node left = headNode;
+        // compare left half and right half
+        while(right!=null){
+            if(right.data != left.data){
+                return false;
+            }
+            right = right.next;
+            left = left.next;
+        }
+        return true;
+    }
+
+    public static void removeCylce(){
+        // detect cycle
+        boolean isCycle = false;
+        Node slow = headNode;
+        Node fast = headNode;
+        while(fast!=null && fast.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow == fast){
+                isCycle = true;
+                break;
+            }
+        }
+        if(isCycle ==false){
+            return;
+        }
+
+        // Find their meeting point;
+        slow = headNode;
+        while(slow.next != fast.next){
+            slow = slow.next;
+            fast = fast.next;
+        }
+        // remove cycle 
+        fast.next= null;
+    }
+
+    // slow fast approach
+    public Node findMid(Node heaNode){
+        Node slow = heaNode;
+        Node fast = headNode;
+        while(fast!=null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+
+    }
+
+    public static boolean isCycle(){
+        Node slow = headNode;
+        Node fast = headNode;
+        while(fast!=null && fast.next!=null){
+            slow = slow.next;
+            fast =fast.next.next;
+            if(slow == fast){
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    private Node getMid(Node headNode){
+        Node slow = headNode;
+        Node fast = headNode.next;
+        while(fast!=null && fast.next!=null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+    public Node merge(Node head1,Node head2){
+        Node mergeLL = new Node(-1);
+        Node temp = mergeLL;
+        while(head1!=null && head2!=null){
+            if(head1.data <= head2.data){
+                temp.next =head1;
+                head1 = head1.next;
+                temp = temp.next;
+            }
+            else{
+                temp.next = head2;
+                head2 = head2.next;
+                temp = temp.next;
+            }
+        }
+        while(head1 != null){
+            temp.next = head1;
+            head1 = head1.next;
+            temp = temp.next;
+        }
+        while(head2!=null){
+            temp.next = head2;
+            head2 = head2.next;
+            temp = temp.next;
+        }
+        return mergeLL.next;
+    }
+
+    public Node mergeSort(Node headNode){
+        if(headNode == null || headNode.next == null){
+            return headNode;
+        }
+        //find mid 
+        Node mid = getMid(headNode);
+        //left half and right half merge
+        Node rightHead = mid.next;
+        mid.next = null;
+        Node newLeft = mergeSort(headNode);
+        Node newRight = mergeSort(rightHead);
+        return merge(newLeft,newRight);
+    }
+
     public static void main(String[] args) {
         LinkedList ll = new LinkedList();
-        ll.addTailNode(1);
+        ll.addFirstNode(4);
         ll.addTailNode(2);
-        ll.addTailNode(3);
-        ll.addTailNode(4);
-        ll.addTailNode(5);
+        ll.addFirstNode(2);
+        ll.addFirstNode(8);
         ll.printLL();
-        // ll.reverse();
-        // ll.printLL();
-        ll.deleteNodeFromEnd(3);
+        headNode = ll.mergeSort(headNode);
         ll.printLL();
     }
 }
