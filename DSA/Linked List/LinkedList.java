@@ -321,14 +321,62 @@ public class LinkedList {
         return merge(newLeft,newRight);
     }
 
+    public void zigzagLL(Node headNode){
+        //find middle node 
+        Node midNode = getMid(headNode);
+        //reverse the 2nd half
+        Node rightNode = midNode.next;
+        midNode.next = null;
+        Node prev = null;
+        Node curr = rightNode;
+        Node next;
+        while(curr!=null){
+            next = curr.next;
+            curr.next =prev;
+            prev = curr;
+            curr = next;
+        }
+        rightNode = prev;
+
+        // Alternate merging
+        Node LH = headNode;
+        Node RH = rightNode;
+        Node nextL,nextR;
+        while(LH!=null && RH!=null){
+            nextL = LH.next;
+            LH.next = RH;
+            nextR = RH.next;
+            RH.next = nextL;
+            RH = nextR;
+            LH = nextL;
+        };
+    }
+    public int removeElements(Node head, int val) {
+        Node temp = head;
+        int count=0; 
+        while(temp.next!=null){
+            if(temp.next.data == val){
+                temp.next = temp.next.next;
+                count++;
+            }else{
+                temp = temp.next;
+            }
+        }
+        return count;
+        
+    }
+
     public static void main(String[] args) {
         LinkedList ll = new LinkedList();
         ll.addFirstNode(4);
         ll.addTailNode(2);
         ll.addFirstNode(2);
         ll.addFirstNode(8);
+        ll.addFirstNode(4);
+        ll.addFirstNode(2);
+        ll.addFirstNode(3);
         ll.printLL();
-        headNode = ll.mergeSort(headNode);
+        ll.removeElements(headNode, 2);
         ll.printLL();
     }
 }
